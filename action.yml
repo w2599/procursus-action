@@ -28,6 +28,9 @@ inputs:
     required: false
     default: 'main'
 
+env:
+  DEBIAN_FRONTEND: noninteractive
+
 runs:
   using: "composite"
   steps:
