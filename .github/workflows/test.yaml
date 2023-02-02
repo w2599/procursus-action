@@ -12,7 +12,7 @@ jobs:
     name: Installs Procursus
     steps:
       - name: Installs Procursus with GitHub action
-        uses: beerpiss/procursus-action@main
+        uses: dhinakg/procursus-action@main
       - name: Tests
         continue-on-error: true
         run: |
@@ -33,7 +33,7 @@ jobs:
     name: Installs Procursus with extra packages
     steps:
       - name: Installs Procursus with GitHub action
-        uses: beerpiss/procursus-action@main
+        uses: dhinakg/procursus-action@main
         with:
           packages: cmake clang
       - name: Tests
@@ -56,7 +56,7 @@ jobs:
     name: Installs Procursus (no cache)
     steps:
       - name: Installs Procursus with GitHub action 
-        uses: beerpiss/procursus-action@main
+        uses: dhinakg/procursus-action@main
         with:
          cache: false
       - name: Tests
@@ -79,9 +79,9 @@ jobs:
     name: Installs Procursus (twice)
     steps:
       - name: Installs Procursus with GitHub action 
-        uses: beerpiss/procursus-action@main
+        uses: dhinakg/procursus-action@main
       - name: Installs ldid and make with the same action
-        uses: beerpiss/procursus-action@main
+        uses: dhinakg/procursus-action@main
         with:
           packages: ldid make
       - name: Tests
@@ -104,7 +104,7 @@ jobs:
     name: Installs Procursus with a different mirror
     steps:
       - name: Installs Procursus with GitHub action 
-        uses: beerpiss/procursus-action@main
+        uses: dhinakg/procursus-action@main
         with:
           mirror: https://repo.quiprr.dev/procursus
           suites: big_sur
