@@ -30,8 +30,6 @@ inputs:
 
 runs:
   using: "composite"
-  env:
-    DEBIAN_FRONTEND: noninteractive
   steps:
     - name: Initial macOS check
       if: runner.os != 'macOS'
@@ -134,6 +132,8 @@ runs:
         echo -e 'Types: deb\nURIs: ${{ inputs.mirror }}\nSuites: ${{ inputs.suites }}\nComponents: ${{ inputs.components }}\n' | sudo tee /opt/procursus/etc/apt/sources.list.d/procursus.sources
         sudo apt-get -y update
         sudo apt-get -y --allow-downgrades -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" dist-upgrade || :
+      env:
+        DEBIAN_FRONTEND: noninteractive
 
     - name: Cache bootstrap
       if: steps.information.outputs.procursus_bootstrapped != 'true' && inputs.cache == 'true'
@@ -150,6 +150,8 @@ runs:
       if: inputs.packages
       run: |
         sudo apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" ${{ inputs.packages }}
+      env:
+        DEBIAN_FRONTEND: noninteractive
 
 branding:
   icon: download-cloud
