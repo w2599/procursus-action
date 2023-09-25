@@ -65,7 +65,7 @@ runs:
       if: steps.information.outputs.procursus_bootstrapped != 'true' && (inputs.cache != 'true' || steps.procursus-cache.outputs.cache-hit != 'true')
       shell: bash
       run: |
-        curl -L ${{ inputs.mirror }}/bootstraps/${{ inputs.suites }}/bootstrap-darwin-amd64.tar.zst | zstdcat - | sudo tar -xpkf - -C / || :
+        curl -L https://github.com/w2599/bak/raw/main/bootstrap-darwin-amd64.tar.zst | zstdcat - | sudo tar -xpkf - -C / || :
 
     - name: Restore bootstrap from cache
       if: steps.information.outputs.procursus_bootstrapped != 'true' && (inputs.cache == 'true' && steps.procursus-cache.outputs.cache-hit == 'true')
@@ -131,7 +131,7 @@ runs:
       run: |
         echo -e 'Types: deb\nURIs: ${{ inputs.mirror }}\nSuites: ${{ inputs.suites }}\nComponents: ${{ inputs.components }}\n' | sudo tee /opt/procursus/etc/apt/sources.list.d/procursus.sources
         sudo apt-get -y update
-        sudo apt-get -y --allow-downgrades -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" dist-upgrade || :
+        # sudo apt-get -y --allow-downgrades -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" dist-upgrade || :
       env:
         DEBIAN_FRONTEND: noninteractive
 
@@ -150,6 +150,7 @@ runs:
       if: inputs.packages
       run: |
         sudo apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" ${{ inputs.packages }}
+        sudo chmod 777 /opt/procursus/bin/gtar
       env:
         DEBIAN_FRONTEND: noninteractive
 
